@@ -1,0 +1,62 @@
+# datafutbol_ar — matplotlib style sheet
+# Combo C "Celeste & Blanco"
+#
+# Uso:
+#     import matplotlib.pyplot as plt
+#     plt.style.use("templates/matplotlib_styles/datafutbol.mplstyle")
+#
+# (también podés usar `from scripts.style import set_default_style; set_default_style()`)
+
+# ── Figura ─────────────────────────────────────────────────
+figure.facecolor    : "#0E2A47"
+figure.edgecolor    : "#0E2A47"
+figure.dpi          : 100
+savefig.facecolor   : "#0E2A47"
+savefig.edgecolor   : "none"
+savefig.dpi         : 200
+savefig.bbox        : tight
+
+# ── Ejes ───────────────────────────────────────────────────
+axes.facecolor      : "#0E2A47"
+axes.edgecolor      : "#8FA7BC"
+axes.linewidth      : 0.8
+axes.labelcolor     : "#FFFFFF"
+axes.titlecolor     : "#FFFFFF"
+axes.titleweight    : bold
+axes.titlesize      : 16
+axes.labelsize      : 12
+axes.spines.top     : False
+axes.spines.right   : False
+axes.grid           : True
+axes.axisbelow      : True
+
+# ── Ticks ──────────────────────────────────────────────────
+xtick.color         : "#FFFFFF"
+ytick.color         : "#FFFFFF"
+xtick.labelsize     : 10
+ytick.labelsize     : 10
+xtick.direction     : out
+ytick.direction     : out
+
+# ── Grilla ─────────────────────────────────────────────────
+grid.color          : "#8FA7BC"
+grid.alpha          : 0.18
+grid.linewidth      : 0.5
+grid.linestyle      : -
+
+# ── Texto ──────────────────────────────────────────────────
+text.color          : "#FFFFFF"
+font.family         : Lato, sans-serif
+font.size           : 11
+
+# ── Leyenda ────────────────────────────────────────────────
+legend.frameon      : False
+legend.fontsize     : 10
+legend.labelcolor   : "#FFFFFF"
+
+# ── Lines & markers ────────────────────────────────────────
+lines.linewidth     : 2.0
+lines.markersize    : 8
+
+# ── Ciclo de colores (paleta Combo C) ──────────────────────
+axes.prop_cycle     : cycler("color", ["#75AADB", "#C9A227", "#FFFFFF", "#8FA7BC", "#4A7AA8"])

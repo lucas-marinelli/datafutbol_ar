@@ -1,0 +1,83 @@
+# ── Datos pesados ──────────────────────────────────────────
+# Solo subimos a GitHub muestras pequeñas o datasets que generamos.
+data/raw/
+data/processed/
+data/external/
+*.parquet
+*.csv
+*.xlsx
+*.xls
+!data/sample/*.csv          # muestras pequeñas para repos públicos
+!docs/**/*.csv              # CSVs de documentación
+
+# ── Outputs (PNG, PDF generados) ───────────────────────────
+# Subir solo los que vamos a publicar y se referencian en README/posts
+outputs/**/draft_*
+outputs/**/test_*
+outputs/**/_tmp_*
+
+# ── Python ─────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ── Virtual envs ───────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Jupyter ────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ── Variables de entorno y secretos ────────────────────────
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+
+# ── IDEs ───────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Logs y temporales ──────────────────────────────────────
+*.log
+logs/
+tmp/
+.cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# ── Soccerdata cache ───────────────────────────────────────
+# soccerdata cachea en el home del usuario por default, pero por las
+# dudas ignoramos también si lo redirige al repo
+.soccerdata/
+
+# ── Específico del proyecto ────────────────────────────────
+# Borradores de captions que no terminamos publicando
+04_Drafts/_archive/
+# Versiones viejas de exports
+*_v[0-9]_OLD.*

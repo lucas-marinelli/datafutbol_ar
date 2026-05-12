@@ -1,0 +1,8 @@
+# templates/canva/ — exportes de plantillas Canva
+# Subimos: PNG/PDF/SVG de templates finales que vas a reutilizar
+# Ejemplos esperables:
+#   - portada_carrusel_1080x1350.png
+#   - slide_interna_carrusel_1080x1350.png
+#   - reel_cover_1080x1920.png
+#   - post_horizontal_x_1600x900.png
+#   - infografia_cuadrada_1080x1080.png
