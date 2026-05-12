@@ -52,10 +52,13 @@ datafutbol_ar/
 │   └── 03_scouting/            ← notebooks de informes scouting
 ├── scripts/
 │   ├── style.py                ← paleta, fuentes, helpers de marca
-│   ├── radar.py                ← crear_radar_pizza()
+│   ├── radar.py                ← crear_radar_comparativo() (mplsoccer.Radar polígono)
 │   ├── shot_map.py             ← crear_shot_map()
 │   ├── pass_network.py         ← crear_pass_network()
 │   ├── heatmap.py              ← crear_heatmap()
+│   ├── carrusel.py             ← portada + cierre de carrusel IG
+│   ├── normalizar_carrusel.py  ← letterbox 1080×1350 para feed IG
+│   ├── jugadores.py            ← nombres mostrables (display_name)
 │   └── data_loaders.py         ← wrappers StatsBomb, FBref, LanusStats con cache
 ├── data/
 │   ├── raw/                    ← datasets crudos descargados (cacheado, no subir)
@@ -102,14 +105,15 @@ jupyter lab
 ## Ejemplo rápido — Shot map del Mundial 2022
 
 ```python
-from scripts.data_loaders import sb_events
+from statsbombpy import sb
 from scripts.shot_map import crear_shot_map
-from scripts.style import set_default_style, BG
+from scripts.style import set_default_style, COLORS
 
 set_default_style()
 
-# Argentina vs Francia, final Mundial 2022
-events = sb_events(match_id=3869685)
+# Argentina vs Arabia Saudita, debut Mundial 2022
+# (descubrir match_id con sb.matches(competition_id=43, season_id=106))
+events = sb.events(match_id=3869151)  # ajustar al ID correcto
 
 shots_arg = events[
     (events["type"] == "Shot") &
@@ -118,13 +122,14 @@ shots_arg = events[
 
 fig, ax = crear_shot_map(
     shots_arg,
-    titulo="ARG 3-3 FRA · Mundial 2022",
-    subtitulo="Final · todos los tiros de Argentina",
+    titulo="ARG 1-2 SAU · Mundial 2022",
+    subtitulo="Debut · todos los tiros de Argentina",
+    fuente="StatsBomb Open Data",
 )
 
 fig.savefig(
-    "outputs/2026-05/shotmap_arg_fra_final.png",
-    dpi=200, facecolor=BG, bbox_inches="tight",
+    "outputs/2026-05/shotmap_arg_sau_debut.png",
+    dpi=200, facecolor=COLORS["bg"], bbox_inches="tight",
 )
 ```
 

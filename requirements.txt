@@ -11,15 +11,24 @@ pyarrow>=14.0          # parquet caching
 
 # ── Football data sources ───────────────────────────────────
 statsbombpy>=1.13      # StatsBomb Open Data
-mplsoccer>=1.5         # Pitch, VerticalPitch, PyPizza, Bumpy, Sonar
+mplsoccer>=1.5         # Pitch, VerticalPitch, Radar (polígono), PyPizza, Bumpy, Sonar
 soccerdata>=1.6        # Workhorse: ClubElo, ESPN, FBref, FotMob, Sofascore, Understat, WhoScored
 ScraperFC>=2.7         # FBref, Sofascore, Capology, Understat, Transfermarkt
 LanusStats>=1.0        # Liga Argentina (FBref + SofaScore + Transfermarkt + Understat + FotMob)
+
+# ── Métricas avanzadas ──────────────────────────────────────
+socceraction>=1.4      # xT (Expected Threat), VAEP — para proyecto final + scouting pro
 
 # ── HTTP / scraping helpers ─────────────────────────────────
 requests>=2.31
 beautifulsoup4>=4.12
 lxml>=4.9
+
+# ── Procesamiento de imágenes (carrusel IG) ────────────────
+Pillow>=10.0           # composición + normalización 1080×1350
+
+# ── Dashboards interactivos ─────────────────────────────────
+streamlit>=1.30        # apps web rápidas (proyecto final, dashboards Mundial)
 
 # ── Notebook & dev ──────────────────────────────────────────
 jupyter>=1.0
