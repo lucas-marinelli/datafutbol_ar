@@ -81,3 +81,10 @@ tmp/
 04_Drafts/_archive/
 # Versiones viejas de exports
 *_v[0-9]_OLD.*
+
+# ── Drafts de posts sin publicar (regla "commit después de publicar") ──
+# Cualquier carpeta llamada _drafts/ o _wip/ se ignora en todo el repo.
+# Cuando el post esté publicado en IG, renombrar la carpeta a su nombre
+# definitivo (sin _drafts/ ni _wip/) y recién ahí entra al control de versiones.
+**/_drafts/
+**/_wip/
