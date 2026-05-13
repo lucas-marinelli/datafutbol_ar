@@ -1,6 +1,6 @@
 # Hola, soy Lucas 👋
 
-Técnico en electromedicina explorando una segunda carrera en **análisis de datos aplicado al fútbol**.
+Profesional en el rubro de electromedicina y equipamientos medicos, explorando una segunda carrera en **análisis de datos aplicado al fútbol**.
 
 🌐 **Marca:** [@datafutbol_ar](https://instagram.com/datafutbol_ar) — football analytics en español con foco sudamericano.
 
