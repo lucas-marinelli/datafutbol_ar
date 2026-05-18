@@ -136,3 +136,83 @@ def cargar_processed(nombre: str) -> pd.DataFrame:
     """Carga un DataFrame de data/processed/{nombre}.parquet"""
     p = _cache_dir("processed") / f"{nombre}.parquet"
     return pd.read_parquet(p)
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Selecciones — banco maestro Mundial 2026
+# ──────────────────────────────────────────────────────────────────────
+
+SELECCIONES_CSV = Path(
+    r"G:\Mi unidad\DATAFUTBOL_AR\02_Branding\selecciones_mundial_2026.csv"
+)
+
+
+def cargar_selecciones(
+    confederacion: Optional[str] = None,
+    estado: Optional[str | list[str]] = None,
+    debutantes: Optional[bool] = None,
+    csv_path: Optional[Path] = None,
+) -> pd.DataFrame:
+    """Carga el CSV maestro de selecciones del Mundial 2026 con filtros opcionales.
+
+    Columnas esperadas:
+        - nombre_es, nombre_en, iso2, archivo_bandera
+        - confederacion (CONMEBOL/UEFA/CAF/AFC/OFC/CONCACAF)
+        - estado_2026 (host/clasificado/no_clasificado/repechaje/dudoso)
+        - debutante (Sí/No)
+        - mundiales_ganados (int)
+        - detalle_clave (str)
+
+    Args:
+        confederacion: si se pasa, filtra por confederación (ej. "CONMEBOL").
+        estado: si se pasa, filtra por estado_2026. Acepta string o lista.
+                Default None = devuelve TODAS las filas (incluyendo Italia
+                no_clasificado).
+        debutantes: si True, solo debutantes; si False, no debutantes; None ignora.
+        csv_path: ruta alternativa al CSV (default: SELECCIONES_CSV).
+
+    Returns:
+        DataFrame con las selecciones que matchean los filtros.
+
+    Ejemplos:
+        # Todas las 48 que juegan el Mundial (clasificados + hosts):
+        df = cargar_selecciones(estado=["clasificado", "host"])
+
+        # Solo CONMEBOL:
+        df = cargar_selecciones(confederacion="CONMEBOL")
+
+        # Debutantes históricos del Mundial 2026:
+        df = cargar_selecciones(debutantes=True)
+    """
+    path = csv_path or SELECCIONES_CSV
+    if not path.exists():
+        raise FileNotFoundError(
+            f"No se encontró el CSV de selecciones en {path}. "
+            "Verificá que esté en 02_Branding/."
+        )
+
+    df = pd.read_csv(path)
+
+    if confederacion is not None:
+        df = df[df["confederacion"] == confederacion]
+
+    if estado is not None:
+        if isinstance(estado, str):
+            df = df[df["estado_2026"] == estado]
+        else:
+            df = df[df["estado_2026"].isin(estado)]
+
+    if debutantes is True:
+        df = df[df["debutante"] == "Sí"]
+    elif debutantes is False:
+        df = df[df["debutante"] != "Sí"]
+
+    return df.reset_index(drop=True)
+
+
+def selecciones_mundial() -> pd.DataFrame:
+    """Atajo: las 48 que efectivamente juegan el Mundial 2026.
+
+    Equivale a cargar_selecciones(estado=["host", "clasificado"]).
+    """
+    return cargar_selecciones(estado=["host", "clasificado"])

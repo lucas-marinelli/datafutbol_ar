@@ -1,0 +1,94 @@
+{
+  "scraped_at": "2026-05-18T02:34:11.088328",
+  "key": "wiki_top_scorers_Argentina",
+  "data": [
+    {
+      "rank": 1,
+      "player": "Lionel Messi",
+      "caps": 198,
+      "goals": 116,
+      "ratio": 0.59,
+      "career": "2005–present"
+    },
+    {
+      "rank": 2,
+      "player": "Gabriel Batistuta",
+      "caps": 78,
+      "goals": 56,
+      "ratio": 0.72,
+      "career": "1991–2002"
+    },
+    {
+      "rank": 3,
+      "player": "Sergio Agüero",
+      "caps": 101,
+      "goals": 41,
+      "ratio": 0.41,
+      "career": "2006–2021"
+    },
+    {
+      "rank": 4,
+      "player": "Lautaro Martínez",
+      "caps": 75,
+      "goals": 36,
+      "ratio": 0.48,
+      "career": "2018–present"
+    },
+    {
+      "rank": 5,
+      "player": "Hernán Crespo",
+      "caps": 64,
+      "goals": 35,
+      "ratio": 0.55,
+      "career": "1995–2007"
+    },
+    {
+      "rank": 6,
+      "player": "Diego Maradona",
+      "caps": 91,
+      "goals": 34,
+      "ratio": 0.37,
+      "career": "1977–1994"
+    },
+    {
+      "rank": 7,
+      "player": "Gonzalo Higuaín",
+      "caps": 75,
+      "goals": 31,
+      "ratio": 0.41,
+      "career": "2009–2018"
+    },
+    {
+      "rank": 7,
+      "player": "Ángel Di María",
+      "caps": 145,
+      "goals": 31,
+      "ratio": 0.21,
+      "career": "2008–2024"
+    },
+    {
+      "rank": 9,
+      "player": "Luis Artime",
+      "caps": 25,
+      "goals": 24,
+      "ratio": 0.96,
+      "career": "1961–1967"
+    },
+    {
+      "rank": 10,
+      "player": "Leopoldo Luque",
+      "caps": 45,
+      "goals": 22,
+      "ratio": 0.49,
+      "career": "1975–1981"
+    },
+    {
+      "rank": 10,
+      "player": "Daniel Passarella",
+      "caps": 70,
+      "goals": 22,
+      "ratio": 0.31,
+      "career": "1976–1986"
+    }
+  ]
+}

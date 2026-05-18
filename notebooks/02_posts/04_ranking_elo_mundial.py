@@ -54,7 +54,9 @@ print(f"Outputs van a: {OUTPUTS}")
 
 # %% [Constantes del post]
 HOY = date(2026, 5, 17)         # Domingo
-MUNDIAL_INICIO = date(2026, 6, 11)  # Apertura — México vs Sudáfrica en el Azteca
+MUNDIAL_INICIO = date(2026, 6, 11)  #    Apertura — México vs Sudáfrica en el Azteca
+MUNDIAL_INICIO_ARG = date(2026,6,16)
+DIAS_AL_DEBUT_ARG = (MUNDIAL_INICIO_ARG - HOY).days
 DIAS_AL_MUNDIAL = (MUNDIAL_INICIO - HOY).days
 print(f"Faltan {DIAS_AL_MUNDIAL} días para que arranque el Mundial 2026")
 
@@ -164,19 +166,21 @@ ax.text(5, 5.5, "yendo al Mundial 2026",
         family=FONTS["body"], style="italic")
 
 # Bottom hook
-ax.text(5, 2.8, "Ranking ELO",
+ax.text(5, 2.8, "Ranking ELO FIFA",
         ha="center", va="center", fontsize=44,
         color=COLORS["text"], fontweight="bold",
         family=FONTS["title"])
-ax.text(5, 2.0, f"al {HOY.strftime('%d/%m/%Y').lstrip('0')}",
-        ha="center", va="center", fontsize=24,
-        color=COLORS["primary"], family=FONTS["body"])
+##ax.text(5, 2.0, f"al {HOY.strftime('%d/%m/%Y').lstrip('0')}",
+ #       ha="center", va="center", fontsize=24,
+  #      color=COLORS["primary"], family=FONTS["body"])
 
 # Footer
-ax.text(5, 0.6, f"FALTAN {DIAS_AL_MUNDIAL} DÍAS PARA EL INICIO",
-        ha="center", va="center", fontsize=20,
-        color=COLORS["accent"], fontweight="bold",
-        family=FONTS["body"])
+##ax.text(5, 0.6, f"FALTAN {DIAS_AL_MUNDIAL} DÍAS PARA EL INICIO",
+  #      ha="center", va="center", fontsize=20,
+   #     color=COLORS["accent"], fontweight="bold",
+    #    family=FONTS["body"])
+
+
 
 watermark(fig)
 
@@ -688,6 +692,58 @@ print("  3. slide_3_ranking.png")
 print("  4. slide_4_argentina.png")
 print("  5. slide_5_forma_vs_fifa.png")
 print("  6. slide_6_cierre.png")
+
+# %% [10. Generar caption IG (R29)]
+# Construye el caption parametrizado con los valores REALES del DataFrame.
+# Si cambian los datos arriba, este caption se regenera consistente.
+# El archivo va dentro de carrusel_final/ junto con los slides — listo para
+# copiar y pegar en Meta Business Suite al programar la publicación.
+
+# Top 3 para el podio del caption
+top3 = df_ranking.head(3)
+nombre_1, pts_1 = top3.iloc[0]["seleccion"], round(top3.iloc[0]["puntos"])
+nombre_2, pts_2 = top3.iloc[1]["seleccion"], round(top3.iloc[1]["puntos"])
+nombre_3, pts_3 = top3.iloc[2]["seleccion"], round(top3.iloc[2]["puntos"])
+
+# Distancia entre #1 y Argentina (para el storytelling "está apretado")
+gap_1_arg = round(top3.iloc[0]["puntos"] - ARG_PUNTOS, 1)
+
+# Día y mes del debut Argentino (rival/sede ajustable según fixture)
+DEBUT_RIVAL = "Argelia"  # ⚠️ actualizar si cambia con sorteo / fixture
+FECHA_FINAL = "19 de julio"
+
+CAPTION_IG = f"""🌍 LAS 16 MÁS FUERTES RUMBO AL MUNDIAL 2026
+
+Faltan {DIAS_AL_MUNDIAL} días para el debut de Argentina vs {DEBUT_RIVAL} y el reinado se acabó: la Albiceleste pierde el #1 que ostentaba desde diciembre 2022.
+
+Cómo quedó el podio (ranking FIFA actualizado):
+🥇 {nombre_1} — {pts_1}
+🥈 {nombre_2} — {pts_2}
+🥉 {nombre_3} — {pts_3}
+
+Apenas {gap_1_arg} puntos separan al líder del 3ro. Está apretadísimo.
+
+El dato curioso: Argentina HOY tiene más puntos FIFA (+{ARG_PUNTOS - PUNTOS_POST_QATAR}) que cuando ganó la copa en Qatar. Pero Francia y España crecieron más rápido en el ciclo y la pasaron.
+
+Y un detalle que duele en Italia: top 12 del mundo pero NO clasificó al Mundial 2026. Tercer ciclo consecutivo afuera.
+
+Mirá el slide 5 — combiné forma reciente (puntos en últimos partidos) con peso FIFA. Sirve para ver quién llega en su mejor momento vs quién viene a renombre.
+
+¿Quién levanta la copa el {FECHA_FINAL}? 👇
+
+————
+📊 Datos: ranking FIFA Hombres (actualización mayo 2026)
+🔍 Fuente: fifa.com/fifa-world-ranking/men
+
+#Mundial2026 #RankingFIFA #Argentina #Scaloneta #FootballAnalytics #datafutbol_ar
+"""
+
+caption_path = CARRUSEL_FINAL / "caption_ig.txt"
+caption_path.write_text(CAPTION_IG, encoding="utf-8")
+print(f"\nCaption guardado en: {caption_path}")
+print(f"Longitud: {len(CAPTION_IG)} caracteres (límite IG: 2200)")
+print("\n--- PREVIEW ---")
+print(CAPTION_IG)
 
 # %% [Verificación pre-publicación]
 # ⚠️ ANTES de programar en Meta, hacé estos chequeos:
