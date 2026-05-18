@@ -1,0 +1,21 @@
+30 días. Exactamente UN MES para que Argentina vuelva a debutar en un Mundial.
+
+Antes de la cita norteamericana, repasamos cómo fue el último debut mundialista de la Scaloneta: ARG 1-2 Arabia Saudita, 22 nov 2022.
+
+Una historia que tiene MUCHO para enseñar sobre cómo se mide el fútbol moderno.
+
+→ En el carrusel te mostramos:
+· Qué pasó realmente en el partido.
+· Cómo se "ven" los tiros de Argentina en un shot map.
+· Qué es el Expected Goals (xG) y por qué ese partido es un ejemplo PERFECTO de cómo NO siempre el que más merece, gana.
+· La paradoja: Argentina dominó. Y perdió.
+
+¿Será diferente esta vez? Seguinos para más análisis rumbo al Mundial 2026.
+
+────────
+METODOLOGÍA
+· Datos: StatsBomb Open Data (eventos del partido, xG oficial de StatsBomb).
+· N: 18 tiros totales en el partido.
+· Visualizaciones armadas con Python + mplsoccer.
+
+#datafutbol #FutbolArgentino #SelecciónArgentina #Mundial2026 #xG #FootballAnalytics #Scaloneta

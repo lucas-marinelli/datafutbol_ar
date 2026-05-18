@@ -1,0 +1,23 @@
+Total ligas FotMob: 16
+
+=== TODAS las ligas ===
+  · Premier League
+  · Bundesliga
+  · La Liga
+  · La Liga 2
+  · Serie A
+  · Ligue 1
+  · Argentina Copa de la Liga
+  · Argentina Primera Division
+  · Primera Division Colombia
+  · Primera Division Chile
+  · Brasileirao
+  · Primera Division Peru
+  · Copa America
+  · Euros
+  · Champions League
+  · Europa League
+
+=== Candidatas AR ===
+  · Argentina Copa de la Liga
+  · Argentina Primera Division
