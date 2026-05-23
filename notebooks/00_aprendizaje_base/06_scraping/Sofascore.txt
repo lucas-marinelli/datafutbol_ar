@@ -1,0 +1,250 @@
+Sofascore
+class ScraperFC.sofascore.Sofascore
+Bases: object
+
+get_league_player_ids(year: str, league: str) → list[int]
+Returns list of player ids for all players in a given year and league
+
+Parameters:
+year (str) – See the Sofascore year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Raises:
+TypeError – If any of the parameters are the wrong type.
+
+InvalidYearException – If the year is not valid for the league.
+
+Return type:
+list[int]
+
+get_match_dict(match_id: str | int) → dict
+Get match data dict for a single match
+
+Parameters:
+match_id (str | int) – Sofascore match URL or match ID
+
+Return type:
+dict
+
+get_match_dicts(year: str, league: str) → list[dict]
+Returns the matches from the Sofascore API for a given league season.
+
+Parameters:
+year (str) – See the Sofascore year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Raises:
+TypeError – If any of the parameters are the wrong type.
+
+InvalidYearException – If the year is not valid for the league.
+
+Returns:
+Each element being a single game of the competition
+
+Return type:
+list[dict]
+
+get_match_id_from_url(match_url: str) → int
+Get match id from a Sofascore match URL.
+
+This can also be found in the ‘id’ key of the dict returned from get_match_dict().
+
+Parameters:
+match_url (str) – Full link to a SofaScore match
+
+Raises:
+TypeError – If match_url is not a string.
+
+Returns:
+Match ID for a SofaScore match
+
+Return type:
+int
+
+get_match_player_ids(match_id: str | int) → dict
+Get the player IDs for a match
+
+Parameters:
+match_id (str | int) – Sofascore match URL or match ID
+
+Returns:
+All players who played in the match. Names are keys, IDs are values.
+
+Return type:
+dict
+
+get_match_url_from_id(match_id: str | int) → str
+Get the Sofascore match URL for a given match ID
+
+Parameters:
+match_id (str | int) – Sofascore match ID
+
+Returns:
+URL to the Sofascore match of the given ID
+
+Return type:
+str
+
+get_positions(selected_positions: list[str]) → str
+Returns a string for the parameter filters of the scrape_league_stats() request.
+
+Parameters:
+selected_positions (list[str]) – List of the positions available to filter on the SofaScore UI
+
+Raises:
+TypeError – If any of the parameters are the wrong type.
+
+ValueError – If any of the items in selected_positions are not valid positions.
+
+Returns:
+Joined abbreviations for the chosen positions
+
+Return type:
+str
+
+get_team_names(match_id: str | int) → tuple[str, str]
+Get the team names for the home and away teams
+
+Parameters:
+match_id (str | int) – Sofascore match URL or match ID
+
+Returns:
+Names of home and away team.
+
+Return type:
+tuple[str, str]
+
+get_valid_seasons(league: str) → dict
+Returns the valid seasons and their IDs for the given league
+
+Parameters:
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Raises:
+TypeError – If any of the parameters are the wrong type.
+
+InvalidLeagueException – If the league is not valid for this module.
+
+Returns:
+Available seasons for the league. Season name is key, season ID is value.
+
+Return type:
+dict
+
+scrape_heatmaps(match_id: str | int) → dict
+Get the x-y coordinates to create a player heatmap for all players in the match.
+
+Players who didn’t play will have an empty list of coordinates.
+
+Parameters:
+match_id (str | int) – Sofascore match URL or match ID
+
+Returns:
+Dict of players, their IDs and their heatmap coordinates, {player name: {‘id’: player_id, ‘heatmap’: heatmap}, …}
+
+Return type:
+dict
+
+scrape_match_momentum(match_id: str | int) → DataFrame
+Get the match momentum values
+
+Parameters:
+match_id (str | int) – Sofascore match URL or match ID
+
+Returns:
+Dataframe of match momentum values. Will be empty if the match does not have match momentum data.
+
+Return type:
+pd.DataFrame
+
+scrape_match_shots(match_id: str | int) → DataFrame
+Scrape shots for a match
+
+Parameters:
+match_id (str | int) – Sofascore match URL or match ID
+
+Return type:
+pd.DataFrame
+
+scrape_player_average_positions(match_id: str | int) → DataFrame
+Return player averages positions for each team
+
+Parameters:
+match_id (str | int) – Sofascore match URL or match ID
+
+Returns:
+Each row is a player and columns averageX and averageY denote their average position in the match.
+
+Return type:
+pd.DataFrame
+
+scrape_player_details(year: str, league: str) → list[SofascorePlayer]
+Scrape details for all players in a given year and league. Details are things like name, DOB, position, heigh, weight, contract expiration, etc.
+
+Please note, the player’s team is their current team, not necessarily their team in the given year and league.
+
+Parameters:
+year (str) – See the Sofascore year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Return type:
+list[SofascorePlayer]
+
+scrape_player_league_stats(year: str, league: str, accumulation: str = 'total', selected_positions: list[str] = ['Goalkeepers', 'Defenders', 'Midfielders', 'Forwards']) → DataFrame
+Get every player statistic that can be asked in league pages on Sofascore.
+
+Parameters:
+year (str) – See the Sofascore year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+accumulation (str) – Value of the filter accumulation. Can be “per90”, “perMatch”, or “total”. Defaults to “total”.
+
+selected_positions (list[str]) – Value of the filter positions. Defaults to [“Goalkeepers”, “Defenders”, “Midfielders”, “Forwards”].
+
+Raises:
+TypeError – If any of the parameters are the wrong type.
+
+InvalidYearException – If the year is not valid for the league.
+
+ValueError – If accumulation is not a valid option.
+
+Return type:
+pd.DataFrame
+
+scrape_player_match_stats(match_id: str | int) → DataFrame
+Scrape player stats for a match
+
+Parameters:
+match_id (str | int) – Sofascore match URL or match ID
+
+Return type:
+pd.DataFrame
+
+scrape_team_league_stats(year: str, league: str) → DataFrame
+Get “general” league stats for all teams in the given league year.
+
+Parameters:
+year (str) – See the Sofascore year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Raises:
+TypeError – If any of the parameters are the wrong type.
+
+InvalidYearException – If the year is not valid for the league.
+
+Return type:
+pd.DataFrame
+
+scrape_team_match_stats(match_id: str | int) → DataFrame
+Scrape team stats for a match
+
+Parameters:
+match_id (str | int) – Sofascore match URL or match ID
+
+Return type:
+pd.DataFrame

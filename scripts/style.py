@@ -27,6 +27,7 @@ from typing import Optional
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.patches import FancyBboxPatch
+from matplotlib.colors import LinearSegmentedColormap
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -42,7 +43,8 @@ COLORS: dict[str, str] = {
     # Variaciones útiles
     "bg_alt": "#0A1628",      # Azul aún más oscuro — modo dark extremo
     "primary_dim": "#4A7AA8", # Celeste apagado — datos secundarios
-    "muted": "#8FA7BC",       # Gris azulado — texto secundario, ejes
+    "muted": "#8FA7BC",       # Gris azulado — texto secundario SOBRE FONDO OSCURO
+    "muted_light": "#3E5266", # Slate oscuro — texto secundario SOBRE FONDO BLANCO (R31)
     "success": "#75AADB",     # = primary (no hay verde en la marca)
     "danger": "#C9A227",      # = accent (no hay rojo en la marca)
     "neutral": "#FFFFFF",
@@ -54,6 +56,19 @@ PRIMARY = COLORS["primary"]
 ACCENT = COLORS["accent"]
 TEXT = COLORS["text"]
 MUTED = COLORS["muted"]
+MUTED_LIGHT = COLORS["muted_light"]
+
+# ──────────────────────────────────────────────────────────────────────
+# COLORMAP de marca para heatmaps / mapas de calor (Combo C)
+# ──────────────────────────────────────────────────────────────────────
+# Gradiente de baja → alta densidad: azul profundo (se funde con el pitch)
+# → celeste → dorado → dorado claro (zona "caliente"). Usar en pitch.kdeplot(cmap=CMAP_DF).
+CMAP_DF = LinearSegmentedColormap.from_list(
+    "datafutbol", ["#0E2A47", "#244B6E", "#75AADB", "#C9A227", "#F4E3A1"], N=256)
+
+# Variante "fría" (todo en azules/celeste, sin dorado) por si el dorado satura:
+CMAP_DF_FRIO = LinearSegmentedColormap.from_list(
+    "datafutbol_frio", ["#0E2A47", "#1E4A6E", "#4A7AA8", "#75AADB", "#FFFFFF"], N=256)
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -619,11 +634,19 @@ def _place_image_at(fig, x: float, y: float, size: float,
         img_array: numpy array de la imagen RGBA.
         alpha: transparencia.
     """
-    # Coords defensivas (no salirse del frame)
+    # Alto preservando el aspecto REAL de la imagen y el de la figura
+    # (size = ancho en fracción de figura; el alto se ajusta para no deformar).
+    try:
+        h_px, w_px = float(img_array.shape[0]), float(img_array.shape[1])
+        fw, fh = fig.get_size_inches()
+        height = size * (h_px / w_px) * (float(fw) / float(fh))
+    except Exception:
+        height = size
+
     left = max(0, x - size / 2)
-    bottom = max(0, y - size / 2)
+    bottom = max(0, y - height / 2)
     width = min(size, 1 - left)
-    height = min(size, 1 - bottom)
+    height = min(height, 1 - bottom)
 
     icon_ax = fig.add_axes((left, bottom, width, height))
     icon_ax.imshow(img_array, alpha=alpha)
@@ -658,6 +681,52 @@ def place_team_badge(fig, x: float, y: float, size: float = 0.06,
 
     badge_path = ESCUDOS_DIR / liga / equipo
     img = _load_png_robust(badge_path)
+    if img is None:
+        return None
+    return _place_image_at(fig, x, y, size, img, alpha)
+
+
+def _slug_club(nombre: str) -> str:
+    """'Real Betis' -> 'real_betis' (snake_case sin tildes, convención R26)."""
+    import re
+    import unicodedata
+    t = unicodedata.normalize("NFKD", str(nombre)).encode("ascii", "ignore").decode()
+    return re.sub(r"[^a-z0-9]+", "_", t.lower()).strip("_")
+
+
+def buscar_escudo(club: str):
+    """Busca el PNG de un escudo por slug del club, en CUALQUIER subcarpeta de
+    escudos_equipos/ (no importa si están sueltos o por liga).
+
+    Devuelve un Path o None. Match por nombre de archivo == slug del club.
+    """
+    if not club or not ESCUDOS_DIR.exists():
+        return None
+    slug = _slug_club(club)
+    compact = slug.replace("_", "")
+    loose = None
+    for p in ESCUDOS_DIR.rglob("*.png"):
+        stem = _slug_club(p.stem)
+        if stem == slug:
+            return p                       # match exacto (prioridad)
+        if stem.replace("_", "") == compact:
+            loose = loose or p             # match tolerante (sin separadores)
+    return loose
+
+
+def place_escudo_club(fig, x: float, y: float, size: float = 0.04,
+                      club: str = None, alpha: float = 1.0):
+    """Coloca el escudo de un club buscándolo por nombre (slug), sin necesidad
+    de saber la liga/subcarpeta. Degradación elegante: si no lo encuentra,
+    devuelve None y no rompe el render.
+
+    Ejemplo:
+        place_escudo_club(fig, x=0.10, y=0.80, size=0.035, club="Real Madrid")
+    """
+    path = buscar_escudo(club)
+    if path is None:
+        return None
+    img = _load_png_robust(path)
     if img is None:
         return None
     return _place_image_at(fig, x, y, size, img, alpha)
@@ -896,7 +965,8 @@ def draw_card_box(
 
 
 __all__ = [
-    "COLORS", "BG", "PRIMARY", "ACCENT", "TEXT", "MUTED",
+    "COLORS", "BG", "PRIMARY", "ACCENT", "TEXT", "MUTED", "MUTED_LIGHT",
+    "CMAP_DF", "CMAP_DF_FRIO",
     "ROLES", "PAISES_COLORS", "pais_color",
     "FONTS", "FONT_TITLE", "FONT_BODY", "FONT_DATA",
     "apply_branding", "watermark", "set_default_style",
@@ -905,5 +975,6 @@ __all__ = [
     "draw_big_number", "draw_quote", "place_logo",
     "draw_trofeo_mundial",
     "place_competition_icon", "place_team_badge", "place_country_flag",
+    "buscar_escudo", "place_escudo_club",
     "LOGO_PATH_ABS", "COMPETICION_ICONS_DIR", "ESCUDOS_DIR", "BANDERAS_DIR",
 ]

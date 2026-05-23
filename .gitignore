@@ -88,3 +88,11 @@ tmp/
 # definitivo (sin _drafts/ ni _wip/) y recién ahí entra al control de versiones.
 **/_drafts/
 **/_wip/
+
+# ── Plataforma de Scouting — datos generados (se regeneran con ingest + build_db) ──
+*.duckdb
+*.duckdb.wal
+plataforma_scouting/data/raw/*
+plataforma_scouting/data/processed/*
+!plataforma_scouting/data/raw/.gitkeep
+!plataforma_scouting/data/processed/.gitkeep

@@ -1,0 +1,132 @@
+FBref
+class ScraperFC.fbref.FBref(wait_time: int = 6)
+Bases: object
+
+get_match_links(year: str, league: str) → list[str]
+Gets all match links for the chosen league season.
+
+Parameters:
+year (str) – See the FBref year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Raises:
+TypeError – If any of the parameters are the wrong type.
+
+InvalidYearException – If the year is not a valid year for the chosen league.
+
+NoMatchLinksException – If there are no match links for the chosen league season.
+
+Returns:
+FBref links to all matches for the chosen league season
+
+Return type:
+list[str]
+
+get_valid_seasons(league: str) → dict
+Finds all of the valid years and their URLs for a given competition
+
+Parameters:
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Returns:
+dict(year: url, …), URLs need to be appended to “https://fbref.com” to be a complete URL.
+
+Raises:
+TypeError – If any of the parameters are the wrong type.
+
+InvalidLeagueException – If the league is not a valid league for this module.
+
+Return type:
+dict
+
+scrape_all_stats(year: str, league: str) → dict
+Scrapes all stat categories
+
+Runs scrape_stats() for each stats category on dumps the returned tuple of dataframes into a dict.
+
+Parameters:
+year (str) – See the FBref year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Returns:
+{stat category: tuple of DataFrame, …}, Tuple is (squad_stats, opponent_stats, player_stats)
+
+Return type:
+dict
+
+scrape_league_table(year: str, league: str) → list[DataFrame]
+Scrapes the league table of the chosen league season
+
+Parameters:
+year (str) – See the FBref year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Raises:
+TypeError – If any of the parameters are the wrong type.
+
+InvalidYearException – If the year is not valid for the league.
+
+Returns:
+Returns a list of all position tables from the league’s homepage on FBref. The first table will be the league table, all tables after that vary by competition.
+
+Return type:
+list[pd.DataFrame]
+
+scrape_match(link: str) → FBrefMatch
+Scrapes an FBref match page.
+
+Parameters:
+link (str) – URL to an FBref match.
+
+Raises:
+TypeError – If link is not a string.
+
+Returns:
+Match data
+
+Return type:
+FBrefMatch
+
+scrape_matches(year: str, league: str) → list[FBrefMatch]
+Scrapes the FBref standard stats page of the chosen league season.
+
+Works by gathering all of the match URL’s from the homepage of the chosen league season on FBref and then calling scrape_match() on each one.
+
+Parameters:
+year (str) – See the FBref year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Returns:
+List of match datas
+
+Return type:
+list[FBrefMatch]
+
+scrape_stats(year: str, league: str, stat_category: str) → dict[str, DataFrame]
+Scrapes a single stats category
+
+Adds team and player ID columns to the stats tables
+
+Parameters:
+year (str) – See the FBref year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+stat_category (str) – The stat category to scrape.
+
+Raises:
+TypeError – If any of the parmaters are the wrong type.
+
+InvalidYearException – If the year is not valid for the chosen league.
+
+ValueError – If the stat category is not valid.
+
+Returns:
+(squad_stats, opponent_stats, player_stats). Tuple elements will be None if the squad stats category does not contain data for the given year and league.
+
+Return type:
+dict[str, pd.DataFrame]

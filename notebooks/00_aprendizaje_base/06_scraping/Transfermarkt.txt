@@ -1,0 +1,96 @@
+Transfermarkt
+class ScraperFC.transfermarkt.Transfermarkt
+Bases: object
+
+get_club_links(year: str, league: str) → list[str]
+Gathers all Transfermarkt club URL”s for the chosen league season.
+
+Parameters:
+year (str) – See the Transfermarkt year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Raises:
+TypeError – If any parameters are the wrong type
+
+InvalidYearException – If year is not a valid year for the league.
+
+Returns:
+List of club URLs
+
+Return type:
+list[str]
+
+get_match_links(year: str, league: str) → list[str]
+Returns all match links for a given competition season.
+
+Parameters:
+year (str) – See the Transfermarkt year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Returns:
+List of match URLs
+
+Return type:
+list[str]
+
+get_player_links(year: str, league: str) → list[str]
+Gathers all Transfermarkt player URL”s for the chosen league season.
+
+Parameters:
+year (str) – See the Transfermarkt year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Returns:
+List of player URLs
+
+Return type:
+list[str]
+
+get_valid_seasons(league: str) → dict
+Return valid seasons for the chosen league
+
+Parameters:
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Raises:
+TypeError – If league is not a string
+
+InvalidLeagueException – If league is not a valid league for this module.
+
+Returns:
+year str is key, ID is value
+
+Return type:
+dict
+
+scrape_player(player_link: str) → DataFrame
+Scrape a single player Transfermarkt link
+
+Parameters:
+player_link (str) – Valid player Transfermarkt URL
+
+Raises:
+ValueError – If more than 1 element exists for some HTML elements.
+
+Returns:
+1-row dataframe with all of the player details
+
+Return type:
+pd.DataFrame
+
+scrape_players(year: str, league: str) → DataFrame
+Gathers all player info for the chosen league season.
+
+Parameters:
+year (str) – See the Transfermarkt year parameter docs for details.
+
+league (str) – See the src/ScraperFC/comps.yaml file for all available competitions and which modules can be used to scrape them.
+
+Returns:
+Each row is a player and contains some of the information from their Transfermarkt
+
+Return type:
+pd.DataFrame

@@ -44,3 +44,6 @@ ipywidgets>=8.1
 # ── Utilidades ──────────────────────────────────────────────
 python-dotenv>=1.0     # leer .env
 tqdm>=4.66             # barras de progreso
+
+# ── Plataforma de scouting (base analítica) ─────────────────
+duckdb>=1.0            # base embebida Parquet + SQL (plataforma_scouting)
